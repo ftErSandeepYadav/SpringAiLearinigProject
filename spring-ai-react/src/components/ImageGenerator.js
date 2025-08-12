@@ -2,17 +2,23 @@ import React, {useState} from "react";
 
 function ImageGenerator() {
 
-    const [prompt, setPrompt] = useState('') ;
+    const [promt, setPromt] = useState('') ;
     const [imageUrls, setImageUrls] = useState([]) ;
 
     const generateImage = async () => {
         // Simulate image generation
         try{
-            const response = await fetch(`https://localhost:8080/generate-image?prompt=${prompt}`);
+            const response = await fetch(`http://localhost:8080/generate-image?promt=${promt}`);
             const urls = await response.json();
-            setImageUrls(urls);
+            if (Array.isArray(urls)) {
+                setImageUrls(urls);
+            } else {
+                setImageUrls([]);
+                console.error("Backend did not return an array:", urls);
+            }
         }
         catch (error) {
+            setImageUrls([]);
             console.error("Error generating image:", error);
         }
     }
@@ -22,8 +28,8 @@ function ImageGenerator() {
       <h2>Image Generator</h2>
       <input
         type="text"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
+        value={promt}
+        onChange={(e) => setPromt(e.target.value)}
         placeholder="Enter image you want to generate"
       />
       <button onClick={generateImage}>Generate Image</button>
