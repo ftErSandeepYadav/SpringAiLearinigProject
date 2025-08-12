@@ -33,4 +33,29 @@ public class ImageService {
         return imageResponse;
     }
 
+    public ImageResponse generateImage(String prompt,
+                                       String quality,
+                                       int N,
+                                       int height,
+                                       int width) {
+
+        // You can customize the options based on the parameters received
+        OpenAiImageOptions options = OpenAiImageOptions.builder()
+                .quality(quality)
+                .N(N)
+                .height(height)
+                .width(width)
+                .build();
+
+
+        ImageResponse imageResponse = openAiImageModel.call(
+                new ImagePrompt(
+                        prompt,
+                        options
+                )
+        ) ;
+
+        return imageResponse;
+    }
+
 }
