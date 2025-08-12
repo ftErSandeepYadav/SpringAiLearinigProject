@@ -23,7 +23,7 @@ function Chat() {
         <input type="text" placeholder="Type your message here..." value={prompt} onChange={(e) => setPrompt(e.target.value)} />
         <button onClick={askAi}>Ask AI</button>
         <div className="output">
-          <p>{chatResponses}</p>
+          <pre className="recipe-text">{chatResponses}</pre>
         </div>
     </div>
   );
